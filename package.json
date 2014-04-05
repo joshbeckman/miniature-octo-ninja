@@ -1,0 +1,39 @@
+{
+  "name": "starklines",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Joshua Beckman <@jbckmn>",
+  "main": "./app.js",
+  "engine": [
+    "node >=0.10.0"
+  ],
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.1.1",
+    "jade": "*",
+    "socket.io": "*",
+    "grunt": "~0.4.1",
+    "grunt-cli": "*",
+    "moment": "~2.2.1",
+    "newrelic": "~1.0.0",
+    "request": "~2.16.6",
+    "passport": "~0.1.17",
+    "passport-mongoose": "0.0.1",
+    "passport-local-mongoose": "~0.2.5",
+    "passport-twitter": "*",
+    "mongoose": "~3.6.20",
+    "mongoose-troop": "0.0.8",
+    "mailcomposer": "~0.2.1",
+    "connect-flash": "*",
+    "async": "*",
+    "mailgun": "*"
+  },
+  "devDependencies": {
+    "grunt-contrib-csslint": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-cssmin": "*"
+  }
+}

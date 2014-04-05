@@ -1,0 +1,169 @@
+body {
+  font-size: 15px ;
+  line-height: 1.4em;
+  font-family: 'Lato', Helvetica, sans-serif;
+  font-weight: 400;
+  background: white;
+  color: #2e393c;
+}
+body *{
+  box-sizing:border-box;
+  font-family: 'Lato', Helvetica, sans-serif;
+  font-weight: 400;
+}
+h1, h2, h3, h4, h5{
+  font-weight: 100;
+}
+a {
+  color: #ea4c89 ;
+  text-decoration: none;
+  transition: 0.3s;-moz-transition: 0.3s;-webkit-transition: 0.3s;-o-transition: 0.3s;
+}
+a:hover{
+  border-bottom: 1px solid #ea4c89;
+  cursor: pointer;
+}
+.muted{
+  opacity: 0.5;
+}
+.em{
+  font-style: italic;
+}
+.upper{
+  text-transform: uppercase;
+}
+.thin{
+  font-weight: 100;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align: right;
+}
+.no-dot-list{
+  list-style: none;
+}
+.container{
+  max-width: 1200px;
+  margin:0 auto;
+}
+.pure-textarea{
+  width: 178px;
+  height: 75px;
+}
+
+#messages{
+  position: fixed;
+  background-color:rgba(0,0,0,0.5);
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index: 100;
+  text-align: center;
+  padding-top: 20vh;
+}
+#messages .wrapper{
+  background-color:#eee;
+  display: inline-block;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 10px;
+}
+#messages .message{
+  color: #ADCD2D;
+}
+#messages .error{
+  color: #CF381C;
+}
+.dismiss-alert{
+  color: #aaa;
+  font-size:1.5em;
+  vertical-align: middle;
+  margin-right: 1em;
+}
+.dismiss-alert:hover{
+  border: none;
+  color: #ea4c89;
+}
+
+#counters a {
+  color: black;
+}
+#counters a:hover {
+  color: grey;
+}
+.live-counter {
+  font-size: 3em;
+  line-height: 1em;
+  color: #fefefe;
+  margin:0 5px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.live-top {
+  opacity: 0.8;
+  transition: 0.3s;-moz-transition: 0.3s;-webkit-transition: 0.3s;-o-transition: 0.3s;
+}
+.live-top:hover {
+  opacity: 1;
+}
+.live-name {
+  margin: 0.1em 0;
+}
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  background: #fff;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+#counters{
+}
+.borders{
+  margin:10px 5px 0px 5px;
+}
+ul{
+  list-style: none;
+  padding-left: 0;
+  margin-left: -2em;
+}
+p{
+  font-size: 1.2em;
+}
+button {
+  background-color: transparent;
+  border: none;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  color: grey;
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
+  margin:10px 5px 0px 5px;
+}
+button:hover {
+  color: black;
+}
+#options{
+  margin-left: 5em;
+  margin-right: 5em;
+}
+
+@media only screen and (max-width :949px){
+  
+}
+@media only screen and (max-width :767px){
+  
+}
+@media only screen and (max-width :749px){
+  
+}

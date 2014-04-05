@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  .pure-g.container
+    .pure-u-1-4
+      .bench-bar
+        .bench-bar-inner
+          include benchHeader
+    .pure-u-3-8
+      form(action="/settings", method="post", style="margin:15px;").pure-form.pure-form-aligned
+        legend #{title}
+        fieldset#settings-fields
+          .pure-control-group
+            label(for="dribbble") Dribbble username
+            input(type="text", name="dribbble", placeholder="dribbble username", value="#{user.dribbble || ''}")
+          .pure-control-group
+            label(for="username") Name
+            input(type="text", name="username", placeholder="Name", value="#{user.username}")
+          .pure-control-group
+            label(for="email") Email
+            input(type="email", name="email", placeholder="email@domain.com", value="#{user.email ? user.email : ''}")
+          .pure-control-group
+            label(for="emailActive")
+              small Receive email updates about bbbench
+            if user.getUpdates
+              input(type="checkbox", name="getUpdates", checked)
+            else
+              input(type="checkbox", name="getUpdates")
+          .pure-control-group
+            a.btn#switch-password(data-toggle-to="change") Change password
+          .pure-controls
+            input(type="submit", value="Update")
+    .pure-u-3-8

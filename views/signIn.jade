@@ -1,0 +1,43 @@
+extends layout
+
+block content
+
+  .container.pure-g
+    .pure-u-1-4
+      .bench-bar
+        .bench-bar-inner
+          include benchHeader
+    .pure-u-3-8
+      .margin-15
+        p#about
+        form#log-in-form(action="#{type == 'register' ? '/register' : '/sign-in'}", method="post").pure-form.pure-form-aligned
+          legend
+            if type == 'register'
+              | Register
+              a.btn#switch-login(data-toggle-to="signin") Sign In
+            else
+              | Sign In
+              a.btn#switch-login(data-toggle-to="register") Register
+          fieldset#login-fields
+            if false
+              .pure-control-group
+                label(for="dribbble") Dribbble username
+                input(type="text", name="dribbble", placeholder="dribbble", autofocus="autofocus")
+            .pure-control-group
+              label#email-login-field(for="email") Email
+              input(type="email", name="email", placeholder="you@domain.co", autofocus="autofocus")
+            .pure-control-group
+              label(for="password") Password
+              input.password-field(type="password", name="password", placeholder="Password")
+            if type == 'register'
+              .pure-control-group
+                label(for="password_conf") Confirm Password
+                input.password-field(type="password", name="password_conf", placeholder="Confirm password")
+            .pure-controls
+              input(type="submit", value="Submit")
+    .pure-u-3-8
+      .margin-15.text-center
+        h3 Sign in via
+        br
+        a.btn.auth-twitter(href="/auth/twitter")
+          span.icon-twitter

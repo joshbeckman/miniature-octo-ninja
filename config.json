@@ -1,0 +1,33 @@
+{
+  "name": "Stark Lines",
+  "tagline": "All your sites in real time",
+  "status": {
+    "500": {
+      "code": 500,
+      "message": "This is embarassing. Something went wrong!"
+    },
+    "404": {
+      "code":404,
+      "message":"Nothing found by that identifier. Life is hard."
+    },
+    "403": {
+      "code": 403,
+      "message": "Not allowed. You can't always get what you want."
+    },
+    "400": {
+      "code":400,
+      "message":"We don't understand what you mean. Speak slowly."
+    }
+  },
+  "twitter":{
+    "consumer_key": "eA4ZZX5gpsySKIWLDmuyr77hX",
+    "consumer_secret": "8tAHxPTLkLKHpZ7YQpKXnvMRAgkRAFFPRgRlE4dxjgN8y0qHxj",
+    "callbackURL":"http://www.starklin.es/auth/twitter/callback"
+  },
+  "mongo":{
+    "url":"mongodb://localhost/starklines"
+  },
+  "mailgun":{
+    "key":"key-5n1bqp873lh8yritf-uiogsvgn120fa4"
+  }
+}
