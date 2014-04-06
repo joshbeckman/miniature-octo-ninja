@@ -9,18 +9,17 @@ body {
 body *{
   box-sizing:border-box;
   font-family: 'Lato', Helvetica, sans-serif;
-  font-weight: 400;
 }
 h1, h2, h3, h4, h5{
   font-weight: 100;
 }
 a {
-  color: #ea4c89 ;
+  color: #24B1E0 ;
   text-decoration: none;
   transition: 0.3s;-moz-transition: 0.3s;-webkit-transition: 0.3s;-o-transition: 0.3s;
 }
 a:hover{
-  border-bottom: 1px solid #ea4c89;
+  border-bottom: 1px solid #24B1E0;
   cursor: pointer;
 }
 .muted{
@@ -34,6 +33,12 @@ a:hover{
 }
 .thin{
   font-weight: 100;
+}
+.invisible{
+  visibility: hidden;
+}
+.visible{
+  visibility: visible;
 }
 .text-center{
   text-align: center;
@@ -54,6 +59,13 @@ a:hover{
 .pure-textarea{
   width: 178px;
   height: 75px;
+}
+.tooltip{
+  opacity: 0;
+}
+#graph1{
+  width: 100%; 
+  height: 100%;
 }
 
 #messages{
@@ -88,9 +100,155 @@ a:hover{
 }
 .dismiss-alert:hover{
   border: none;
-  color: #ea4c89;
+  color: #24B1E0;
 }
 
+#land{}
+#color-bar{
+  height: 4px;
+  background: #24B1E0;
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: 0.3s;-moz-transition: 0.3s;-webkit-transition: 0.3s;-o-transition: 0.3s;
+}
+#hero-img{
+  height: 350px;
+  display: block;
+  background-attachment: scroll;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(#fff, #24B1E0);
+  background-image: -moz-linear-gradient(#fff, #24B1E0);
+  background-image: -webkit-linear-gradient(#fff, #24B1E0);
+  background-image: -o-linear-gradient(#fff, #24B1E0);
+  background-image: -ms-linear-gradient(#fff, #24B1E0);
+}
+#land .cta{
+  height: 345px;
+  display: block;
+  background-attachment: scroll;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#land .cta.flex-h{
+  height: auto;
+  padding-bottom: 10em;
+}
+#land .cta .title{
+  font-size: 3em;
+  margin:1.5em 0 1.2em;
+}
+#land .cta .tagline{
+  font-size: 1.4em;
+  color: #aaa;
+  font-weight: 400;
+}
+#land .cta .link, .link-button{
+  display: inline-block;
+  color: white;
+  background-color: #24B1E0;
+  font-size: 1.1em;
+  padding: 1em 2em;
+  margin: 0 0 1em;
+  border-radius: 3px;
+  transition: 1s;-moz-transition: 1s;-webkit-transition: 1s;-o-transition: 1s;
+}
+#land .cta .link:hover, .link-button:hover{
+  background-color: #45CB46;
+  border: none;
+}
+#land .cta .sign-in{
+  display: inline-block;
+}
+#land .readons {
+  max-width: 895px;
+  display: block;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+#land .reason{
+  margin-bottom: 4em;
+}
+#land .reason:last-child{
+  margin-bottom: 13em;
+}
+#land .reason .illustration{
+  text-align: center;
+}
+#land .reason .illustration img{
+  border-radius: 200px;
+}
+#land .reason .words{
+  padding-top: 5em;
+}
+#land .reason .words.left{
+  padding-right: 10%;
+}
+#land .reason .words.right{
+  padding-left: 10%;
+}
+#land .reason .reason-title{
+  font-size: 1.4em;
+  color: #24B1E0;
+  margin: 1.3em 0;
+  font-weight: 400;
+}
+#land .reason .reason-text{
+  font-size: 1em;
+  color: #9aa1a6;
+  font-weight: 400;
+  margin: 1.3em 0;
+}
+#land .copy{
+  border-top: 1px solid #ececec;
+  color: grey;
+  font-size: 0.8em;
+  padding: 2em 0;
+}
+
+#sea{
+  display: none;
+}
+.prompt-header{
+  text-align: center;
+}
+.appending-list, .appending-p{
+  margin: 0 auto;
+  display: block;
+  padding: 0;
+  max-width: 400px;
+  text-align: center;
+}
+.appending-p{
+  color: #999;
+  max-width: 500px;
+}
+
+#reload-button{
+  background-color: #F80F40;
+  border: none;
+  display: inline-block;
+  color: white;
+  font-size: 0.9em;
+  padding: 0.75em 1.25em;
+  margin: 0 0 1em;
+  border-radius: 3px;
+  opacity: 0.75;
+  transition: 1s;-moz-transition: 1s;-webkit-transition: 1s;-o-transition: 1s;
+}
+#reload-button:hover{
+  opacity: 1;
+}
+#social-links{
+  color: #aaa;
+  display: none;
+}
 #counters a {
   color: black;
 }
@@ -115,6 +273,12 @@ a:hover{
 .live-name {
   margin: 0.1em 0;
 }
+.close-profile{
+  float:right;
+  display:none;
+  cursor:pointer;
+  color: #F80F40;
+}
 div.tooltip {
   position: absolute;
   text-align: center;
@@ -138,20 +302,6 @@ ul{
 }
 p{
   font-size: 1.2em;
-}
-button {
-  background-color: transparent;
-  border: none;
-  font-weight: 300;
-  text-transform: uppercase;
-  font-size: 1.5em;
-  color: grey;
-  border-top: 2px solid grey;
-  border-bottom: 2px solid grey;
-  margin:10px 5px 0px 5px;
-}
-button:hover {
-  color: black;
 }
 #options{
   margin-left: 5em;

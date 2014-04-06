@@ -56,4 +56,6 @@ function dismissAlert(elem){
 }
 
 // Set up sockets
-window.socket = io.connect(window.location.hostname);
+if (window.io) {
+  window.socket = io.connect(window.location.hostname);
+}

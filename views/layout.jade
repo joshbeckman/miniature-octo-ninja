@@ -44,5 +44,10 @@ html
         
     block content
 
-    script(src="/socket.io/socket.io.js")
-    script(src="/javascripts/starklines.min.js")
+    if false
+      script(type='text/javascript', src="/socket.io/socket.io.js")
+    if req && req.headers.host == 'localhost:5001'
+      script(type='text/javascript', src="/javascripts/starklines.dev.min.js")
+    else
+      script(type='text/javascript', src="/javascripts/starklines.min.js")
+    script(type='text/javascript', src='https://apis.google.com/js/client.js?onload=handleClientLoad')

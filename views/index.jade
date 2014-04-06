@@ -4,4 +4,50 @@ block content
   if user
     include userIndex 
   else
-    .pure-g.container
+    #color-bar
+    #land
+      #hero-img
+      .cta.text-center
+        h1.title.upper
+          a(href="/", title="Stark Lines") Stark Lines
+        h3.tagline All the traffic from all your sites, in real time.
+        a.link.authorize-button(title="Get started") Start Watching Your Sites
+        if false
+          br
+          a.sign-in(href="/sign-in", title="Sign In") Sign In
+      .readons 
+        .pure-g-r.reason
+          .pure-u-1.illustration.pure-hidden-desktop.pure-hidden-tablet.text-center 
+            img(src="http://placehold.it/275/24B1E0/ffffff&text=Level%20Up")
+          .pure-u-7-12.words.left
+            h3.reason-title.upper See More Information
+            p.reason-text Google Analytics will not let you see all of your live visitors, across multiple sites, together. <strong>We can do better.</strong> Stark Lines will let you line up all your sites in one graph.
+          .pure-u-5-12.illustration.pure-hidden-phone 
+            img(src="http://placehold.it/275/24B1E0/ffffff&text=Level%20Up")
+        .pure-g-r.reason
+          .pure-u-1.illustration.pure-hidden-desktop.pure-hidden-tablet.text-center 
+            img(src="http://placehold.it/275/24B1E0/ffffff&text=Secure")
+          .pure-u-5-12.illustration.pure-hidden-phone 
+            img(src="http://placehold.it/275/24B1E0/ffffff&text=Secure")
+          .pure-u-7-12.words.right
+            h3.reason-title.upper Rest Easy
+            p.reason-text Your data will not be stored, no registration necessary. It all runs in your browser. (<a href="http://www.bckmn.com/blog/stark-lines" target="_blank">You can read about it here</a>.)
+      .cta.flex-h.text-center
+        h3.tagline Combine the live traffic from your sites
+        a.link.authorize-button(title="Get started") Start Watching Your Sites
+      .copy.text-center
+        p &copy; 2014 All Rights Reserved. Stark Lines | 
+          a(href="http://bckmn.com") jbckmn
+    #sea
+      .pure-g-r
+        .pure-u-1
+          #controls
+            button#reload-button.invisible Restart
+          #options
+          #counters.text-center.pure-g-r
+      #graph1.aGraph
+      #social-links.text-center
+        p This graph is scaled to be 10 minutes wide, refreshing itself every 10 seconds to display your latest active visitor counts.
+        a#download-button Download Configuration
+    #divvy.tooltip
+

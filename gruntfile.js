@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
-      general: {
+      prod: {
         options: {
           banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
           mangle: {
@@ -12,7 +12,17 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          'public/javascripts/starklines.min.js': ['public/javascripts/vendor/classie.js', 'public/javascripts/vendor/gapi.js', 'public/javascripts/vendor/d3.v3.min.js', 'public/javascripts/vendor/gatrack.js', 'public/javascripts/vendor/moment.js', 'public/javascripts/vendor/lodash.js', 'public/javascripts/lodash-ext.js', 'public/javascripts/script.js', 'public/javascripts/user.js', 'public/javascripts/lines.js']
+          'public/javascripts/starklines.min.js': ['public/javascripts/vendor/d3.v3.min.js', 'public/javascripts/vendor/classie.js', 'public/javascripts/vendor/gatrack.js', 'public/javascripts/vendor/moment.js', 'public/javascripts/vendor/lodash.js', 'public/javascripts/lodash-ext.js', 'public/javascripts/script.js', 'public/javascripts/user.js', 'public/javascripts/lines.js']
+        }
+      },
+      dev: {
+        options: {
+          banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+          mangle: false,
+          beautify: true
+        },
+        files: {
+          'public/javascripts/starklines.dev.min.js': ['public/javascripts/vendor/d3.v3.min.js', 'public/javascripts/vendor/classie.js', 'public/javascripts/vendor/gatrack.js', 'public/javascripts/vendor/moment.js', 'public/javascripts/vendor/lodash.js', 'public/javascripts/lodash-ext.js', 'public/javascripts/script.js', 'public/javascripts/user.js', 'public/javascripts/lines.js']
         }
       }
     },
