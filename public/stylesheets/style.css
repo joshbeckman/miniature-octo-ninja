@@ -118,7 +118,7 @@ a:hover{
 #hero-img{
   height: 350px;
   display: block;
-  background-attachment: scroll;
+/*  background-attachment: scroll;
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -126,7 +126,7 @@ a:hover{
   background-image: -moz-linear-gradient(#fff, #24B1E0);
   background-image: -webkit-linear-gradient(#fff, #24B1E0);
   background-image: -o-linear-gradient(#fff, #24B1E0);
-  background-image: -ms-linear-gradient(#fff, #24B1E0);
+  background-image: -ms-linear-gradient(#fff, #24B1E0);*/
 }
 #land .cta{
   height: 345px;

@@ -329,6 +329,10 @@
     color = function (int) {
       return ['#00A0B0','#6A4A3C','#CC333F','#EB6841','#EDC951','#3B2D38','#F02475','#F27435','#CFBE27','#BCBDAC', '#413E4A', '#73626E', '#B38184', '#F0B49E', '#F7E4BE', '#8C2318', '#5E8C6A', '#88A65E', '#BFB35A', '#F2C45A'][int];
     },
+    illus = window.d3.select("#hero-img").append("svg")
+      .attr("class", "hero-chart")
+      .attr("width", window.innerWidth)
+      .attr("height", 350),
     chart = window.d3.select("#graph1").append("svg")
       .attr("class", "chart")
       .attr("width", w * starkLines.data[0].length - 1)
