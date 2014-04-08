@@ -31,13 +31,23 @@
       ].join('')),
     optionsDiv = document.getElementById('options');
 
+  window.starkLines = {
+    data: window.d3.range(30).map(function(){return window.d3.range(60).map(initial);}),
+    allData: window.d3.range(30).map(function(){return [];}),
+    profileList: [],
+    running: false,
+    delay: 10000,
+    counterList: [],
+    runningInterval: null
+  };
+
   window.onload = function() {
     handleClientLoad();
   };
 
   window.handleClientLoad = function () {
     window.gapi.client.setApiKey(apiKey);
-    window.setTimeout(checkAuth,1);
+    window.setTimeout(checkAuth,100);
   };
 
   function checkAuth() {
@@ -150,7 +160,7 @@
         appendingList.push(dndCtaTemplate());
         optionsDiv.innerHTML = appendingList.join('');
         readyChoiceLinks(queryProfiles);
-        document.getElementById('reload-button').className = '';
+        // document.getElementById('reload-button').className = '';
       } else {
         console.log('No webproperties found for this account.');
         optionsDiv.innerHTML += '<p>No webproperties found for this account.</p>';
@@ -209,7 +219,8 @@
         counters = document.getElementById('counters'),
         oldIndex = counters.children.length;
     rb.innerHTML = 'Add Profile';
-    rb.onclick = function() { queryAccounts(); };
+    rb.className = '';
+    rb.addEventListener('click', function() { makeApiCall(); }, false);
     optionsDiv.innerHTML = null;
     counters.innerHTML += profileTemplate({
       profile: profile.toString(),
@@ -240,6 +251,7 @@
       starkLines.profileList.push({id: profile, name: profileName});
     }
     if (starkLines.running === false) {
+      document.getElementById('graph1').style.display = 'block';
       runnable();
     }
     if (starkLines.profileList.length == starkLines.data.length) {
@@ -267,8 +279,14 @@
         return parseInt(b[1], 10) - parseInt(a[1], 10);
       });
     }
-    var count = (results.rows ? window.d3.sum(results.rows, function(d) { return parseInt(d[1], 10); }) : 0);
-    var el = document.getElementById(results.profileInfo.profileId.toString()+'-counter');
+    var count = (results.rows ? window.d3.sum(results.rows, function(d) { return parseInt(d[1], 10); }) : 0),
+      el = document.getElementById(results.profileInfo.profileId.toString()+'-counter'),
+      dataObj = {
+        time: (new Date()).getTime(),
+        value: count,
+        profileName: results.profileInfo.profileName,
+        profileId: results.profileInfo.profileId
+      };
     el.innerHTML = count;
     el = document.getElementById(results.profileInfo.profileId.toString()+'-top');
     if (results.rows) {
@@ -281,100 +299,151 @@
       el.href = 'https://www.google.com/analytics/web/?hl=en#realtime/rt-overview/a'+results.profileInfo.accountId.toString()+'w'+results.profileInfo.internalWebPropertyId.toString()+'p'+results.profileInfo.profileId.toString();
     }
     starkLines.data[position].shift();
-    starkLines.data[position].push({
-      time: (new Date()).getTime(),
-      value: count,
-      profileName: results.profileInfo.profileName,
-      profileId: results.profileInfo.profileId
-    });
-    starkLines.allData[position].push({
-      time: (new Date()).getTime(),
-      value: count,
-      profileName: results.profileInfo.profileName,
-      profileId: results.profileInfo.profileName
-    });
+    starkLines.data[position].push(dataObj);
+    starkLines.allData[position].push(dataObj);
   }
-  var initial = function () {
-      return {
-        time: (new Date()).getTime(),
-        value: 0,
-        profileName: '',
-        profileId: ''
-      };
+  function initial() {
+    return {
+      time: (new Date()).getTime(),
+      value: 0,
+      profileName: '',
+      profileId: ''
     };
-  window.starkLines = {
-    data: window.d3.range(30).map(function(){return window.d3.range(60).map(initial);}),
-    allData: window.d3.range(30).map(function(){return [];}),
-    profileList: [],
-    running: false,
-    delay: 10000,
-    counterList: [],
-    runningInterval: null
-  };
-  var x = window.d3.scale.linear()
-      .domain([1, starkLines.data[0].length - 2])
-      .range([0, window.innerWidth]),
-    y = window.d3.scale.linear()
-      .domain([0, window.d3.max(starkLines.data, function(d){ return d.value;})])
-      .rangeRound([0, h]),
-    line = window.d3.svg.line()
-      .x(function(d,i) {
-        return x(i);
-      })
-      .y(function(d) {
-        return h - y(d.value) - 0.5;
-      }).interpolate("basis"),
-    w = window.innerWidth/starkLines.data[0].length,
-    h = window.innerHeight/2,
-    color = function (int) {
-      return ['#00A0B0','#6A4A3C','#CC333F','#EB6841','#EDC951','#3B2D38','#F02475','#F27435','#CFBE27','#BCBDAC', '#413E4A', '#73626E', '#B38184', '#F0B49E', '#F7E4BE', '#8C2318', '#5E8C6A', '#88A65E', '#BFB35A', '#F2C45A'][int];
-    },
-    illus = window.d3.select("#hero-img").append("svg")
-      .attr("class", "hero-chart")
-      .attr("width", window.innerWidth)
-      .attr("height", 350),
-    chart = window.d3.select("#graph1").append("svg")
-      .attr("class", "chart")
-      .attr("width", w * starkLines.data[0].length - 1)
-      .attr("height", h),
-    divvy = window.d3.select("#divvy"),
-    runnable = function () {
-      starkLines.running = true;
+  }
 
-      for (i = 0; i < starkLines.data.length; i++) {
-        chart.append("path")
-          .attr("id", "myPath"+i.toString())
-          .attr("stroke", color(i))
-          .attr("stroke-width", 3)
-          .attr("fill", "none")
-          .attr("d", line(starkLines.data[i]));
-      }
+  var color = window.d3.scale.linear()
+      .domain([0, starkLines.data.length - 1])
+      .range(["#24B1E0", "#F80F40"]);
+
+  function drawMe() {
+    document.getElementById('graph1').innerHTML = null;
+    var divvy = window.d3.select("#divvy"),
+    n = starkLines.data.length, // number of layers
+    m = starkLines.data[0].length, // number of samples per layer
+    stack = window.d3.layout.stack(),
+    layers = stack(
+      starkLines.data.map(
+        function(dd) {
+          return dd.map(
+            function(d, i) {
+              return {
+                time: d.time, 
+                profileName: d.profileName,
+                profileId: d.profileId, 
+                x: i, 
+                y: Math.max(0, d.value)
+              };
+            }); 
+        })
+    ),
+    yGroupMax = window.d3.max(layers, function(layer) { return window.d3.max(layer, function(d) { return d.y; }); }),
+    yStackMax = function() {
+      return window.d3.max(layers, function(layer) { return window.d3.max(layer, function(d) { return d.y0 + d.y; }); });
+    },
+    margin = {top: 10, right: 0, bottom: 0, left: 0},
+    width = document.getElementById("graph1").offsetWidth - margin.left - margin.right,
+    height = document.getElementById("graph1").offsetHeight - margin.top - margin.bottom,
+    x = window.d3.scale.ordinal()
+      .domain(window.d3.range(m))
+      .rangeRoundBands([0, width], 0.05),
+    y = window.d3.scale.linear()
+      .domain([0, yStackMax()])
+      .range([height, 0]),
+    color = window.d3.scale.linear()
+      .domain([0, n - 1])
+      .range(["#24B1E0", "#F80F40"]),
+    xAxis = window.d3.svg.axis()
+      .scale(x)
+      .tickSize(0)
+      .tickPadding(6)
+      .orient("bottom"),
+    svg = window.d3.select("#graph1").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")"),
+    layer = svg.selectAll(".layer")
+      .data(layers)
+      .enter().append("g")
+      .attr("class", "layer")
+      .style("fill", function(d, i) { return color(i); }),
+    rect = layer.selectAll("rect")
+      .data(function(d) { return d; })
+      .enter().append("rect")
+      .attr("x", function(d) { return x(d.x); })
+      .attr("y", function(d) { return y(d.y0 + d.y); })
+      .attr("width", x.rangeBand())
+      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+      .attr("transform", "translate(" + x(1) + ")")
+      .transition()
+      .duration(starkLines.delay - 50)
+      .attr("transform", "translate(" + x(0) + ")");
+    layer.selectAll("rect").on('mouseover', function(d,i) {
+        d3.select(this).style('stroke', color).style("opacity", 0.75);
+        divvy.transition().duration(200).style("opacity", 0.8);
+        divvy.html(d.y.toString()+' visitors<br>'+d.profileName)
+        .style("left", (d3.event.pageX) + "px")     
+        .style("top", (d3.event.pageY - 28) + "px");
+      }).on('mouseout', function() {
+        divvy.transition().duration(200).style("opacity", 0);
+        divvy.html('');
+        d3.select(this).style("opacity", 1);
+      });
+    // starkLines.svg = svg;
+    console.log(layer);
+  }
+
+  function runnable () {
+    starkLines.running = true;
+    var i;
+    for (i = 0; i < starkLines.profileList.length; i++) {
+      setTimeout(queryLiveReportingApi, 110, starkLines.profileList[i].id);
+    }
+    setTimeout(drawMe, 2000);
+    starkLines.runningInterval = setInterval(function() {
       for (i = 0; i < starkLines.profileList.length; i++) {
         setTimeout(queryLiveReportingApi, 110, starkLines.profileList[i].id);
       }
-      redraw();
-      starkLines.runningInterval = setInterval(function() {
-        for (i = 0; i < starkLines.profileList.length; i++) {
-          setTimeout(queryLiveReportingApi, 110, starkLines.profileList[i].id);
-        }
-        redraw();
-        window.d3.timer.flush(); // avoid memory leak when in background tab
-      }, starkLines.delay);
-    },
-    redraw = function () {
-      y = window.d3.scale.linear()
-        .domain([0, 1 + parseInt(window.d3.max(starkLines.data, function(dat){ return window.d3.max(dat, function(d) {return parseInt(d.value, 10);}); }), 10)])
-        .rangeRound([0, h]);
-      for (i = 0; i < starkLines.data.length; i++) {
-        chart.selectAll("#myPath"+i.toString())
-          .attr("d", line(starkLines.data[i]))
-          .attr("transform", "translate(" + x(1) + ")")
-          .transition()
-          .ease('linear')
-          .duration(starkLines.delay - 50)
-          .attr("transform", "translate(" + x(0) + ")");
-      }
-    };
+      drawMe();
+      window.d3.timer.flush(); // avoid memory leak when in background tab
+    }, starkLines.delay);
+  }
+  function redraw () {
+    var y = window.d3.scale.linear()
+        .domain([0, yStackMax()])
+        .rangeRound([0, height]),
+      layers = stack(
+        starkLines.data.map(
+          function(dd) {
+            return dd.map(
+              function(d, i) {
+                return {
+                  time: d.time, 
+                  profileName: d.profileName,
+                  profileId: d.profileId, 
+                  x: i, 
+                  y: Math.max(0, d.value)
+                };
+              }); 
+          })
+      ),
+      layer = svg.selectAll(".layer"),
+      rect = layer.selectAll("rect")
+        .data(function(d) { return d; })
+        .attr("x", function(d) { return x(d.x); })
+        .attr("y", function(d) { return y(d.y0 + d.y); })
+        .attr("width", x.rangeBand())
+        .attr("height", function(d) { return y(d.y0) - y(d.y0 - d.y); })
+        .attr("transform", "translate(" + x(1) + ")")
+        .transition()
+        .ease('linear')
+        .duration(starkLines.delay - 50)
+        .attr("transform", "translate(" + x(0) + ")");
+    // console.log(starkLines.data[0][59]);
+    window.layerSet = layers;
+    window.layerOne = layer;
+    window.rectOne = rect;
+  }
   // dnd interface and loading
   (function initializeDnd() {
     function handleDragOver(evt) {
@@ -445,7 +514,7 @@
     document.getElementById('color-bar').style.width = val.toString() + '%';
   }
 
-  document.getElementById('reload-button').addEventListener('click', function(evt){
-    window.location.reload();
-  }, false);
+  // document.getElementById('reload-button').addEventListener('click', function(evt){
+  //   window.location.reload();
+  // }, false);
 })(this, this.document);

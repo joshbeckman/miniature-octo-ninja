@@ -1,5 +1,6 @@
 (function(window, document) {
-  var n = 10, // number of layers
+  var divvy = window.d3.select("#divvy"),
+    n = 10, // number of layers
     m = 60, // number of samples per layer
     stack = window.d3.layout.stack(),
     layers = stack(window.d3.range(n).map(function() { return bumpLayer(m, .1); })),
@@ -46,6 +47,18 @@
       .attr("y", function(d) { return y(d.y0 + d.y); })
       .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
 
+  layer.selectAll("rect").on('mouseover', function(d,i) {
+      d3.select(this).style('stroke', color).style("opacity", 0.75);
+      divvy.transition().duration(200).style("opacity", 0.8);
+      divvy.html(Math.round(d.y).toString()+' active visitor' + (Math.round(d.y) != 1 ? 's' : ''))
+      .style("left", (d3.event.pageX) + "px")     
+      .style("top", (d3.event.pageY - 28) + "px");
+    }).on('mouseout', function() {
+      divvy.transition().duration(200).style("opacity", 0);
+      divvy.html('');
+      d3.select(this).style("opacity", 1);
+    });
+
   // This returns a layer of x,y where y is the data value (2 tweets or w/e)
   function bumpLayer(n, o) {
 
@@ -64,74 +77,4 @@
     for (i = 0; i < 5; ++i) bump(a);
     return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
   }
-  function  makeLayer(ar){
-    return ar.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
-  }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // var data_json = <%= @tweets_json.html_safe %>,
-  //     parseDate = window.d3.time.format("%m/%d/%Y").parse,
-  //     stack = window.d3.layout.stack(),
-  //     n = data_json.length, // number of layers
-  //     m = data_json[0].length, // number of samples per layer
-  //     layers = stack(data_json.map(function(dd) {return dd.map(function(d, i) {return {date: d.date, type: d.type, x: i, y: Math.max(0, d.value)};} ); })),
-  //     yStackMax = window.d3.max(layers, function(layer) { return window.d3.max(layer, function(d) { return d.y0 + d.y; }); }),
-  //     margin = {top: 10, right: 5, bottom: 20, left: 5},
-  //     width = document.getElementById("tweets-breakdown").offsetWidth - margin.left - margin.right,
-  //     height = 400 - margin.top - margin.bottom;
-
-  // // data_json.forEach(function(dd) {
-  // //   dd.forEach(function(d){
-  // //     d.date = parseDate(d.date); // Convert times to d3 style
-  // //   })
-  // // });
-
-  // var x = window.d3.scale.ordinal()
-  //     .domain(window.d3.range(m))
-  //     .rangeRoundBands([0, width], .08);
-
-  // var y = window.d3.scale.linear()
-  //     .domain([0, yStackMax])
-  //     .range([height, 0]);
-
-  // var color = window.d3.scale.linear()
-  //     .domain([0, n - 1])
-  //     .range(["#c0e7f7", "#29b1e4"]);
-
-  // var xAxis = window.d3.svg.axis()
-  //     .scale(x)
-  //     .tickValues(data_json[0].map(function(d) { return d.date.substr(0,5)}))
-  //     .tickSize(0)
-  //     .tickPadding(6)
-  //     .orient("bottom");
-
-  // var svg = window.d3.select("#tweets-breakdown").append("svg")
-  //     .attr("width", width + margin.left + margin.right)
-  //     .attr("height", height + margin.top + margin.bottom)
-  //     .append("g")
-  //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  // var layer = svg.selectAll(".layer")
-  //     .data(layers)
-  //     .enter().append("g")
-  //     .attr("class", "layer")
-  //     .style("fill", function(d, i) { return color(i); });
-
-  // var rect = layer.selectAll("rect")
-  //     .data(function(d) { return d; })
-  //   .enter().append("rect")
-  //     .attr("x", function(d) { return x(d.x); })
-  //     .attr("y", height)
-  //     .attr("width", x.rangeBand())
-  //     .attr("height", 0);
-
-  // rect.transition()
-  //     .delay(function(d, i) { return i * 10; })
-  //     .attr("y", function(d) { return y(d.y0 + d.y); })
-  //     .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
-
-  // svg.append("g")
-  //     .attr("class", "x-axis")
-  //     .attr("transform", "translate(0," + height + ")")
-  //     .call(xAxis);
 })(this, this.document);

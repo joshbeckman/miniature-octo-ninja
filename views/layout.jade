@@ -47,7 +47,15 @@ html
     if false
       script(type='text/javascript', src="/socket.io/socket.io.js")
     if req && req.headers.host == 'localhost:5001'
-      script(type='text/javascript', src="/javascripts/starklines.dev.min.js")
+      script(type='text/javascript', src="/javascripts/vendor/lodash.js")
+      script(type='text/javascript', src="/javascripts/vendor/moment.js")
+      script(type='text/javascript', src="/javascripts/vendor/gatrack.js")
+      script(type='text/javascript', src="/javascripts/vendor/classie.js")
+      script(type='text/javascript', src="/javascripts/vendor/d3.v3.min.js")
+      script(type='text/javascript', src="/javascripts/lodash-ext.js")
+      script(type='text/javascript', src="/javascripts/script.js")
+      script(type='text/javascript', src="/javascripts/user.js")
+      script(type='text/javascript', src="/javascripts/lines.js")
       script(type='text/javascript', src="/javascripts/demo.js")
     else
       script(type='text/javascript', src="/javascripts/starklines.min.js")
