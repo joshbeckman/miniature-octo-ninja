@@ -6,14 +6,37 @@
   function makeScroller(scrollToPath) {
     return function(){
       var path = scrollToPath;
-      scrollTo(window, document.getElementById(path).offsetTop, 1000);
+      scrollElemTo(window, document.getElementById(path).offsetTop, 1000);
       window.history.pushState({path: path}, ('bbbench ' + path), '/#' + path);
     };
   }
   for (; i < length; i++) {
-    scrollers[i].onclick = makeScroller(scrollers[i].dataset.scrollTo);
+    scrollers[i].onclick = makeScroller(scrollers[i].dataset.scrollElemTo);
   }
 })(this, this.document);
+
+// Custom ScrollTo
+window.scrollElemTo = function(element, to, duration) {
+  var start = element.scrollTop,
+      change = to - start,
+      currentTime = 0,
+      increment = 20,
+      easeInOutQuad = function (t, b, c, d) {
+        t /= d/2;
+        if (t < 1) return c/2*t*t + b;
+        t--;
+        return -c/2 * (t*(t-2) - 1) + b;
+      },
+      animateScroll = function(){        
+        currentTime += increment;
+        var val = easeInOutQuad(currentTime, start, change, duration);
+        element.scrollTop = val;
+        if(currentTime < duration) {
+            setTimeout(animateScroll, increment);
+        }
+      };
+  animateScroll();
+};
 
 // Init activators
 (function(window, document){

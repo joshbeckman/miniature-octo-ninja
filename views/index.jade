@@ -21,7 +21,9 @@ block content
             img(src="http://placehold.it/275/24B1E0/ffffff&text=Level%20Up")
           .pure-u-7-12.words.left
             h3.reason-title.upper See More Information
-            p.reason-text Google Analytics will not let you see all of your live visitors, across multiple sites, together. <strong>We can do better.</strong> Stark Lines will let you line up all your sites in one graph.
+            p.reason-text Google Analytics will not let you see all of your live visitors, across multiple sites, together. <em>We can do better.</em>
+              br
+              | Stark Lines will let you line up all your sites in one graph.
           .pure-u-5-12.illustration.pure-hidden-phone 
             img(src="http://placehold.it/275/24B1E0/ffffff&text=Level%20Up")
         .pure-g-r.reason
@@ -42,12 +44,14 @@ block content
       .pure-g-r
         .pure-u-1
           #controls
-            button#reload-button.invisible Restart
+            button#reload-button.invisible(title="Add Another Profile")
           #options
           #counters.text-center.pure-g-r
       #graph1.aGraph
       #social-links.text-center
         p This graph is scaled to be 10 minutes wide, refreshing itself every 10 seconds to display your latest active visitor counts.
-        a#download-button Download Configuration
+        a#download-button
+          span.icon-download(style="margin-right:0.5em;")
+          | Download Configuration
     #divvy.tooltip
 

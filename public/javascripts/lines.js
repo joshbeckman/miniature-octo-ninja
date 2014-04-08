@@ -4,7 +4,7 @@
     scopes = 'https://www.googleapis.com/auth/analytics.readonly',
     dndCtaTemplate = _.template('</ul><p class="appending-p">Or, you can drag and drop a Stark Lines configuration file anywhere on this page.<br><a href="http://www.bckmn.com/blog/even-starker-lines" target="_blank">You can read more here.</a></p>'),
     profileTemplate = _.template([
-        '<div class="pure-u-1-5">',
+        '<div class="pure-u-1-5 profile-wrap">',
           '<span class="icon-cross2 close-profile" title="Remove Profile"></span>',
           '<a target="_blank" id="<%= profile %>-link">',
             '<div class="borders" style="border-color:<%= color %>;">',
@@ -130,6 +130,7 @@
       } else {
         funktion(evt.target.dataset.itemId);
       }
+      window.scrollElemTo(document.body, 0 , 500);
     }
   }
   function handleAccounts(results) {
@@ -217,7 +218,8 @@
     document.getElementById('social-links').style.display = 'inherit';
     var rb = document.getElementById('reload-button'),
         counters = document.getElementById('counters'),
-        oldIndex = counters.children.length;
+        oldIndex = counters.children.length,
+        closers = document.getElementsByClassName('close-profile');
     rb.innerHTML = 'Add Profile';
     rb.className = '';
     rb.addEventListener('click', function() { makeApiCall(); }, false);
@@ -225,15 +227,12 @@
     counters.innerHTML += profileTemplate({
       profile: profile.toString(),
       profileName: profileName,
-      color: color(starkLines.profileList.length)
+      color: color(starkLines.profileList.length - 1)
     });
-    counters.children[oldIndex].onmouseover = function() {
-      this.children[0].style.display = 'inline';
-    };
-    counters.children[oldIndex].onmouseout = function() {
-      this.children[0].style.display = 'none';
-    };
-    counters.children[oldIndex].children[0].onclick = function(ev) {
+    for (var i = closers.length - 1; i >= 0; i--) {
+      closers[i].addEventListener('click', wantToRemove, false);
+    }
+    function wantToRemove(ev) {
       var resp = confirm('Remove this profile?');
       if (resp === true) {
         var pos = [].indexOf.call(this.parentNode.parentNode.children, this.parentNode);
@@ -242,7 +241,7 @@
         starkLines.allData[pos] = window.d3.range(60).map(window.initial);
         this.parentNode.parentNode.removeChild(this.parentNode);
       }
-    };
+    }
     if (starkLines.profileList.indexOf) {
       if (starkLines.profileList.indexOf(profile) == -1) {
         starkLines.profileList.push({id: profile, name: profileName});
@@ -311,9 +310,12 @@
     };
   }
 
-  var color = window.d3.scale.linear()
-      .domain([0, starkLines.data.length - 1])
+  function color(int) {
+    var co = window.d3.scale.linear()
+      .domain([0, starkLines.profileList.length - 1])
       .range(["#24B1E0", "#F80F40"]);
+    return co(int);
+  }
 
   function drawMe() {
     document.getElementById('graph1').innerHTML = null;
@@ -349,9 +351,6 @@
     y = window.d3.scale.linear()
       .domain([0, yStackMax()])
       .range([height, 0]),
-    color = window.d3.scale.linear()
-      .domain([0, n - 1])
-      .range(["#24B1E0", "#F80F40"]),
     xAxis = window.d3.svg.axis()
       .scale(x)
       .tickSize(0)
@@ -389,8 +388,9 @@
         divvy.html('');
         d3.select(this).style("opacity", 1);
       });
-    // starkLines.svg = svg;
-    console.log(layer);
+    for (var i = 0; i < starkLines.profileList.length; i++) {
+      document.getElementById(starkLines.profileList[i].id + '-counter').parentNode.style.backgroundColor = color(i);
+    }
   }
 
   function runnable () {
@@ -399,7 +399,7 @@
     for (i = 0; i < starkLines.profileList.length; i++) {
       setTimeout(queryLiveReportingApi, 110, starkLines.profileList[i].id);
     }
-    setTimeout(drawMe, 2000);
+    drawMe();
     starkLines.runningInterval = setInterval(function() {
       for (i = 0; i < starkLines.profileList.length; i++) {
         setTimeout(queryLiveReportingApi, 110, starkLines.profileList[i].id);

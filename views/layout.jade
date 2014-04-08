@@ -11,7 +11,22 @@ html
     else
       link(rel='stylesheet', href='/stylesheets/starklines.min.css')
     link(rel='icon', href="/images/favicon.png")
-    meta(name="description", content="All of your sites' traffic in real time.")
+    link(rel='author', href='https://plus.google.com/u/0/103739350784081056661')
+    meta(property='og:locale', content='en_US')
+    meta(property='og:url', content='http://www.starklin.es')
+    meta(property='og:title', content='#{title}')
+    meta(property='og:site_name', content="Stark Lines")
+    meta(property='og:type', content='website')
+    meta(name='twitter:card', content='summary')
+    // meta(name='twitter:site', content='@jbckmn')
+    // meta(name='twitter:creator', content='@jbckmn')
+    meta(name='twitter:url', content='http://www.starklin.es')
+    meta(name='twitter:title', content='#{title}')
+    meta(name='twitter:image', content='http://www.starklin.es/images/favicon.png')
+    meta(name='twitter:description', content="Stark Lines allows you to watch all of your sites' Google Anlytics live visitor traffic in real time. It's totally cool.")
+    meta(name='twitter:domain', content='http://www.starklin.es')
+    meta(name="apple-mobile-web-app-capable", content="yes")
+    meta(name="description", content="Stark Lines allows you to watch all of your sites' Google Anlytics live visitor traffic in real time. It's totally cool.")
     if user
       meta(name="uid", content="#{user._id}")
     if req && req.headers.host != 'localhost:5001'
@@ -21,7 +36,7 @@ html
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '', 'starklin.es');
+        ga('create', 'UA-37125372-7', 'starklin.es');
         ga('send', 'pageview');
 
   body
