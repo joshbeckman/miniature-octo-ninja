@@ -12,7 +12,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          'public/javascripts/starklines.min.js': ['public/javascripts/vendor/d3.v3.min.js', 'public/javascripts/vendor/classie.js', 'public/javascripts/vendor/gatrack.js', 'public/javascripts/vendor/moment.js', 'public/javascripts/vendor/lodash.js', 'public/javascripts/lodash-ext.js', 'public/javascripts/script.js', 'public/javascripts/user.js', 'public/javascripts/lines.js']
+          'public/javascripts/starklines.min.js': ['public/javascripts/vendor/d3.v3.min.js', 'public/javascripts/vendor/classie.js', 'public/javascripts/vendor/gatrack.js', 'public/javascripts/vendor/moment.js', 'public/javascripts/vendor/lodash.js', 'public/javascripts/lodash-ext.js', 'public/javascripts/demo.js', 'public/javascripts/script.js', 'public/javascripts/user.js', 'public/javascripts/lines.js']
         }
       },
       dev: {
