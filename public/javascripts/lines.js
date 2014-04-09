@@ -251,6 +251,9 @@
     }
     if (starkLines.running === false) {
       document.getElementById('graph1').style.display = 'block';
+      if (window.innerHeight > 700) {
+        document.getElementById('graph1').style.height = (window.innerHeight/2).toString() + 'px';
+      }
       runnable();
     }
     if (starkLines.profileList.length == starkLines.data.length) {

@@ -179,10 +179,26 @@ a:hover{
   margin-bottom: 4em;
 }
 #land .reason:last-child{
-  margin-bottom: 13em;
+  margin-bottom: 6em;
 }
 #land .reason .illustration{
   text-align: center;
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 5em;
+  padding: 120px 0;
+}
+#land .reason .illustration span:nth-child(2){
+  color: #aaa;
+}
+#land .reason .illustration.level-up{
+  color: #F80F40;
+}
+#land .reason .illustration.secure{
+  color: #24B1E0; 
+}
+#land .reason .reason-title.level-reason{
+  color: #F80F40;
 }
 #land .reason .illustration img{
   border-radius: 200px;
@@ -325,5 +341,7 @@ p{
   
 }
 @media only screen and (max-width :749px){
-  
+  #land .reason .words{
+    padding: 0 5% !important;
+  }
 }
