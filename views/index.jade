@@ -48,9 +48,6 @@ block content
       .cta.flex-h.text-center
         h3.tagline Combine the live traffic from your sites
         a.link.authorize-button(title="Get started") Start Watching Your Sites
-      .copy.text-center
-        p &copy; 2014 All Rights Reserved. Stark Lines | 
-          a(href="http://bckmn.com") jbckmn
     #sea
       .pure-g-r
         .pure-u-1
@@ -64,5 +61,19 @@ block content
         a#download-button
           span.icon-download(style="margin-right:0.5em;")
           | Download Configuration
+    .copy.text-center.pure-g-r
+      .pure-u-1-2
+        form#contact-form(method="POST", action="http://forms.brace.io/jsh@bckmn.com", title="Contact Stark Lines", name="Contact Stark Lines")
+          label(for="name") My name is  
+            input(type="text", name="name", placeholder="Jane Smith", required)
+          label(for="_replyto") , I can be reached at  
+            input(type="text", name="_replyto", placeholder="jane@smith.com", required)
+          label(for="_replyto") , and I'd just like to suggest/say that   
+            input(type="text", name="message", placeholder="I wish Stark Lines could make pigs fly", required)
+          | .
+          input(type="submit", value="Send Message")
+      .pure-u-1-2
+        p &copy; 2014 All Rights Reserved. Stark Lines | 
+          a(href="http://bckmn.com") jbckmn
     #divvy.tooltip
 

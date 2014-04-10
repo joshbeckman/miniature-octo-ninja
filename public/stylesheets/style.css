@@ -224,15 +224,57 @@ a:hover{
   font-weight: 400;
   margin: 1.3em 0;
 }
-#land .copy{
+.copy{
   border-top: 1px solid #ececec;
   color: grey;
   font-size: 0.8em;
   padding: 2em 0;
 }
+#contact-form{
+  margin: 0 auto;
+  max-width: 400px;
+  font-size: 1.5em;
+  text-align: left;
+  line-height: 1.7em;
+}
+#contact-form label{
+
+}
+#contact-form input{
+  border: none;
+  border-bottom: 1px dashed #24B1E0;
+  text-align: center;
+}
+#contact-form input:focus{
+  border-bottom-style: solid;
+  box-shadow: none;
+  outline: none;
+}
+#contact-form input[name="name"]{
+  width: 5em;
+}
+#contact-form input[name="_replyto"]{
+  width: 7.5em;
+}
+#contact-form input[name="message"]{
+  width: 16em;
+}
+#contact-form input[type="submit"]{
+  display: block;
+  border: none;
+  border-bottom: 1px solid #24B1E0;
+  background: aliceblue;
+  color: #24B1E0;
+  padding: 0.5em 1em;
+  margin: 1em 0em 2em;
+}
+#contact-form input[type="submit"]:focus, #contact-form input[type="submit"]:hover{
+  border-bottom-style: dashed;
+}
 
 #sea{
   display: none;
+  margin-bottom: 2em;
 }
 .prompt-header{
   text-align: center;
