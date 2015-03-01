@@ -237,8 +237,8 @@
       if (resp === true) {
         var pos = [].indexOf.call(this.parentNode.parentNode.children, this.parentNode);
         starkLines.profileList.splice(pos, 1);
-        starkLines.data[pos] = window.d3.range(60).map(window.initial);
-        starkLines.allData[pos] = window.d3.range(60).map(window.initial);
+        starkLines.data[pos] = window.d3.range(60).map(initial);
+        starkLines.allData[pos] = window.d3.range(60).map(initial);
         this.parentNode.parentNode.removeChild(this.parentNode);
       }
     }
@@ -458,7 +458,7 @@
       var i = 0,
           length = profileArray.length;
       window.starkLines.profileList = [];
-      window.starkLines.data = window.d3.range(30).map(function(){return window.d3.range(60).map(window.initial);});
+      window.starkLines.data = window.d3.range(30).map(function(){return window.d3.range(60).map(initial);});
       window.starkLines.allData = window.d3.range(30).map(function(){return [];});
       document.getElementById('counters').innerHTML = null;
       for (; i < length; i++){
