@@ -21,7 +21,7 @@
     "grunt-cli": "*",
     "moment": "~2.2.1",
     "newrelic": "~1.0.0",
-    "request": "~2.16.6",
+    "request": "~2.88.0",
     "passport": "~0.1.17",
     "passport-mongoose": "0.0.1",
     "passport-local-mongoose": "~0.2.5",
