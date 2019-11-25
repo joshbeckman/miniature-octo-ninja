@@ -28,7 +28,7 @@
     "passport-twitter": "*",
     "mongoose": "~3.6.20",
     "mongoose-troop": "0.0.8",
-    "mailcomposer": "~0.2.1",
+    "mailcomposer": "~4.0.2",
     "connect-flash": "*",
     "async": "*",
     "mailgun": "*"
