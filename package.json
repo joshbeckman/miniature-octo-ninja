@@ -19,7 +19,7 @@
     "socket.io": "*",
     "grunt": "~0.4.1",
     "grunt-cli": "*",
-    "moment": "~2.2.1",
+    "moment": "~2.24.0",
     "newrelic": "~1.0.0",
     "request": "~2.16.6",
     "passport": "~0.1.17",
