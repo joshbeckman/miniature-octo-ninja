@@ -24,7 +24,7 @@
     "request": "~2.16.6",
     "passport": "~0.1.17",
     "passport-mongoose": "0.0.1",
-    "passport-local-mongoose": "~0.2.5",
+    "passport-local-mongoose": "~5.0.1",
     "passport-twitter": "*",
     "mongoose": "~3.6.20",
     "mongoose-troop": "0.0.8",
